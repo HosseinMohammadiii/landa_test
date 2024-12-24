@@ -15,13 +15,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<bool>? isAllInfo;
+  List<bool> isAllInfo = [];
 
   @override
   void initState() {
     super.initState();
+    // Fetches user account information if logged in.
     BlocProvider.of<AccountBloc>(context).add(DisplayUserInformationEvent());
-    isAllInfo = [];
   }
 
   @override
@@ -34,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         leading: GestureDetector(
             onTap: () {
+              //Display dialog for account logout
               showDialogLogOut(context);
             },
             child: const Icon(Icons.logout)),
@@ -123,13 +124,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 (userInfo) {
                   // Initialize isAllInfo list based on userInfo length
-                  if (isAllInfo!.isEmpty) {
+                  if (isAllInfo.isEmpty) {
                     isAllInfo = List<bool>.filled(userInfo.length, false);
                   }
                   //Display user informations
                   return RefreshIndicator(
                     color: const Color(0xffAA8453),
                     onRefresh: () async {
+                      // Call the DisplayUserInformationEvent event block to fetch the data again
                       context
                           .read<AccountBloc>()
                           .add(DisplayUserInformationEvent());
@@ -140,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemCount: userInfo.length,
                           itemBuilder: (context, index) {
                             return Container(
-                              height: isAllInfo![index] ? 200 : 110,
+                              height: isAllInfo[index] ? 200 : 110,
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 10),
                               padding: const EdgeInsets.symmetric(
@@ -182,7 +184,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           userInfo: userInfo[index].email,
                                           index: index,
                                         ),
-                                        if (isAllInfo![index]) ...[
+                                        //Display other user information when the isAllInfo variable is true
+                                        if (isAllInfo[index]) ...[
                                           const Spacer(),
                                           _textUserInfo(
                                             title: 'Mobile',
@@ -254,10 +257,10 @@ class _HomeScreenState extends State<HomeScreen> {
           child: GestureDetector(
             onTap: () {
               setState(() {
-                isAllInfo![index] = !isAllInfo![index];
+                isAllInfo[index] = !isAllInfo[index];
               });
             },
-            child: isAllInfo![index]
+            child: isAllInfo[index]
                 ? const Icon(Icons.keyboard_arrow_up_rounded, size: 30)
                 : const Icon(Icons.keyboard_arrow_down_rounded, size: 30),
           ),
@@ -307,8 +310,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             TextButton(
               onPressed: () async {
+                // Calling the logOut method from an AuthManager object
                 AuthManager().logOut();
-
+                //Navigator push to AuthenticationScreen and delete the previous screen
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(

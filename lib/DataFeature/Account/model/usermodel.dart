@@ -5,6 +5,7 @@ class UserModel {
   String mobile;
   String currency;
   String language;
+  //UserModel constructor model
   UserModel({
     required this.email,
     required this.userName,
@@ -13,7 +14,7 @@ class UserModel {
     required this.currency,
     required this.language,
   });
-
+//UserModel factory constructor model
   factory UserModel.fromJson(Map<String, dynamic> jsonObject) {
     return UserModel(
       email: jsonObject['email'],

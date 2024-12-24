@@ -1,9 +1,9 @@
 abstract class AccountEvent {}
 
-//DisplayUserInformationEvent event bloc
+//DisplayUserInformationEvent event bloc to display users informations
 final class DisplayUserInformationEvent extends AccountEvent {}
 
-//AuthLoginRequest event bloc for login user
+//AuthLoginRequest event bloc to login user
 final class AuthLoginRequest extends AccountEvent {
   String email;
   String password;
@@ -11,7 +11,7 @@ final class AuthLoginRequest extends AccountEvent {
   AuthLoginRequest(this.email, this.password);
 }
 
-//AuthRegisterRequest event bloc for register user
+//AuthRegisterRequest event bloc to register user
 final class AuthRegisterRequest extends AccountEvent {
   String email;
   String userName;

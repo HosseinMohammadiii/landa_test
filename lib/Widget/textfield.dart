@@ -48,6 +48,7 @@ class TextfieldWidget extends StatelessWidget {
           ),
         ),
         onTapOutside: (event) {
+          //When user on tap outside textfield unfocus
           txtFocusNode.unfocus();
         },
       ),

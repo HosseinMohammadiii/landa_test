@@ -7,6 +7,7 @@ class BaseUrl {
 }
 
 class DioProvider {
+  // This can be used for requests that do require authentication.
   static Dio createDio() {
     Dio dio = Dio(
       BaseOptions(

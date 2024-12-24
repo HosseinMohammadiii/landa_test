@@ -6,18 +6,19 @@ import '../../model/usermodel.dart';
 
 //Interface for the authentication repository.
 abstract class AuthenticationDataSource {
-  // Registers a new user with a username and password.
   Future<void> registerUser(String email, String userName, String password);
-  // Logs in a user and returns a token.
+
   Future<void> loginUser(String email, String password);
 
-  // Fetches and returns account information of the current user.
   Future<List<UserModel>> getDisplayUserInfo();
 }
 
+// Implementation of the authentication dataSourc.
 final class AuthAccountDataSourceRemoot extends AuthenticationDataSource {
   Dio dio;
+  // Constructor for data source for authentication-related operations.
   AuthAccountDataSourceRemoot(this.dio);
+  // Implements the register method to handle user registration using the datasource
   @override
   Future<void> registerUser(
       String email, String userName, String password) async {
@@ -45,6 +46,7 @@ final class AuthAccountDataSourceRemoot extends AuthenticationDataSource {
     }
   }
 
+// Implements the login method to handle user login using the datasource
   @override
   Future<void> loginUser(String email, String password) async {
     try {
@@ -56,7 +58,6 @@ final class AuthAccountDataSourceRemoot extends AuthenticationDataSource {
       if (login.statusCode == 200) {
         // Saves user token, and displays a welcome notification.
         AuthManager().saveToken(login.data?['access_token']);
-        AuthManager().saveId(login.data['user']['id']);
 
         return login.data?['access_token'];
       }
@@ -73,6 +74,7 @@ final class AuthAccountDataSourceRemoot extends AuthenticationDataSource {
     }
   }
 
+// Fetches the user account information from the datasource
   @override
   Future<List<UserModel>> getDisplayUserInfo() async {
     try {

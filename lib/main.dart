@@ -55,6 +55,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      //Checking if the token is not empty to display the HomeScreen
       home: AuthManager().getToken().isNotEmpty
           ? const HomeScreen()
           : const AuthenticationScreen(),
